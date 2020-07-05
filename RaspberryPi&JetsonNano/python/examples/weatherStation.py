@@ -114,7 +114,7 @@ try:
     fontweather = ImageFont.truetype(os.path.join(picdir, 'meteocons-webfont.ttf'), 30)
     fontweatherbig = ImageFont.truetype(os.path.join(picdir, 'meteocons-webfont.ttf'), 40)
 
-    # I want to knwo how big my main texts are, so lets retieve that
+    # I want to know how big my main texts are, so lets retieve that
     w1, h1 = font24.getsize(location)
     w2, h2 = font20.getsize(description) 
     w3, h3 = fontweatherbig.getsize(weather_icon_dict[weather.get_weather_code()])
@@ -128,7 +128,8 @@ try:
     draw.text((10, 0), description, font=font24, fill=0)
     draw.text((10, 25), location, font=font20, fill=0)
     # Draw the weather icon
-    draw.text((epd.width-w3-10, 5), weather_icon_dict[weather.get_weather_code()], font=fontweatherbig, fill=0)
+    print("Placing the weather icon at x location {}".format(epd.width-w3))
+    draw.text((epd.width-w3, 5), weather_icon_dict[weather.get_weather_code()], font=fontweatherbig, fill=0)
     # When was the weather we're displaying updated?
     draw.text((10, 45), "Observed at: {}".format(time.strftime("%I:%M %p", time.localtime(reftime)), font=font16, fill=0))
 

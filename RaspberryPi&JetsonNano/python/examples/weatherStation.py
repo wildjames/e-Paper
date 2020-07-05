@@ -107,7 +107,7 @@ try:
         font24 = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), 24)
 
         # These "fonts" are actually the weather icons
-        fontweather = ImageFont.truetype(os.path.join(picdir, 'meteocons-webfont.ttf'), 30)
+        fontweather = ImageFont.truetype(os.path.join(picdir, 'meteocons-webfont.ttf'), 35)
         fontweatherbig = ImageFont.truetype(os.path.join(picdir, 'meteocons-webfont.ttf'), 40)
 
         # I want to know how big my main texts are, so lets retieve that
@@ -149,7 +149,7 @@ try:
 
         # Sunrise and sunset times. Start with the icons
         draw.text((10, 100), "A", font=fontweather, fill=0)
-        draw.text((130, 100), "J", font=fontweather, fill=0)
+        draw.text((150, 100), "J", font=fontweather, fill=0)
         # Draw the actual times
         draw.text(
             (45, 100), 
@@ -157,7 +157,7 @@ try:
             font=font20, fill=0
         )
         draw.text(
-            (160, 100), 
+            (180, 100), 
             time.strftime("%H:%M", time.localtime(sunset)),
             font=font20, fill=0
         )

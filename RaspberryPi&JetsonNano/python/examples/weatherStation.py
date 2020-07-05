@@ -77,16 +77,13 @@ weather_icon_dict = {200 : "6", 201 : "6", 202 : "6", 210 : "6", 211 : "6", 212 
 
 
 logging.basicConfig(level=logging.DEBUG)
+epd_height = 250
+epd_width = 122
 
+n = 0
 try:
     print("Starting...")
     logging.info("epd2in13_V2 WeatherStation")
-    
-    epd = epd2in13_V2.EPD()
-    logging.info("init and Clear")
-    epd.init(epd.FULL_UPDATE)
-    epd.Clear(0xFF)
-    
 
     print("Fetching weather...")
     # Get Weather data from OWM
@@ -119,7 +116,7 @@ try:
     w2, h2 = font20.getsize(description) 
     w3, h3 = fontweatherbig.getsize(weather_icon_dict[weather.get_weather_code()])
 
-    image = Image.new('1', (epd.height, epd.width), 255) # 255 means all white
+    image = Image.new('1', (epd_height, epd_width), 255) # 255 means all white
     # This is our drawing driver object.
     draw = ImageDraw.Draw(image) 
 
@@ -128,13 +125,13 @@ try:
     draw.text((10, 0), description, font=font24, fill=0)
     draw.text((10, 30), location, font=font20, fill=0)
     # Draw the weather icon
-    print("Placing the weather icon at x location {}".format(epd.width-w3))
-    print("epd width: {}".format(epd.width))
-    print("epd height: {}".format(epd.height))
+    print("Placing the weather icon at x location {}".format(epd_width-w3))
+    print("epd width: {}".format(epd_width))
+    print("epd height: {}".format(epd_height))
     print("w3: {}".format(w3))
-    draw.text((epd.height-5-w3, 5), weather_icon_dict[weather.get_weather_code()], font=fontweatherbig, fill=0)
+    draw.text((epd_height-5-w3, 5), weather_icon_dict[weather.get_weather_code()], font=fontweatherbig, fill=0)
     # When was the weather we're displaying updated?
-    draw.text((10, 55), "Observed at: {}".format(time.strftime("%I:%M %p", time.localtime(reftime)), font=font16, fill=0))
+    draw.text((10, 55), "Observed at: {}".format(time.strftime("%I:%M %p", time.localtime(time.now)), font=font16, fill=0))
 
     # Lets draw the temperature on the display now.
     tempstring = "{:.0f}{}C".format(temperature['temp'], u'\u00b0')
@@ -166,15 +163,22 @@ try:
         font=font20, fill=0
     )
 
-
     # Push to the screen
-    epd.display(epd.getbuffer(image))
-    time.sleep(30)
-    
+    if n%10 == 0:
+        epd = epd2in13_V2.EPD()
+        logging.info("init and Clear")
+        epd.init(epd.FULL_UPDATE)
+        epd.Clear(0xFF)
+        epd.display(epd.getbuffer(image))
+        time.sleep(30)
+    else:
+        epd.displayPartBaseImage(epd.getbuffer(image))
+        epd.init(epd.PART_UPDATE)
+
 
     # # partial update
     logging.info("4.show time...")
-    time_image = Image.new('1', (epd.height, epd.width), 255)
+    time_image = Image.new('1', (epd_height, epd_width), 255)
     time_draw = ImageDraw.Draw(time_image)
     
     epd.init(epd.FULL_UPDATE)

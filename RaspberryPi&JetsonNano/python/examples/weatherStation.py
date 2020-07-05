@@ -173,7 +173,7 @@ try:
             logging.info("Trying a partial update")
             epd.displayPartial(epd.getbuffer(image))
         n += 1
-        time.sleep(10)
+        time.sleep(refresh_delay)
 
 except IOError as e:
     logging.info(e)

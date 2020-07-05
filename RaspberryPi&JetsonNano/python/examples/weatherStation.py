@@ -167,10 +167,10 @@ try:
             logging.info("init and Clear")
             epd.init(epd.FULL_UPDATE)
             epd.Clear(0xFF)
-            epd.display(epd.getbuffer(image))
+            epd.displayPartBaseImage(epd.getbuffer(image))
+            epd.init(epd.PART_UPDATE)
         else:
             logging.info("Trying a partial update")
-            epd.init(epd.PART_UPDATE)
             epd.displayPartial(epd.getbuffer(image))
         n += 1
         time.sleep(10)

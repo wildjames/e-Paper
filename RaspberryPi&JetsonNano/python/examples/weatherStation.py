@@ -171,7 +171,7 @@ try:
         else:
             logging.info("Trying a partial update")
             epd.init(epd.PART_UPDATE)
-            epd.display(epd.getbuffer(image))
+            epd.displayPartial(epd.getbuffer(image))
         n += 1
         time.sleep(10)
 

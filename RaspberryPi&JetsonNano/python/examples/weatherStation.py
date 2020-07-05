@@ -173,10 +173,10 @@ try:
             epd.display(epd.getbuffer(image))
         else:
             print("Trying a partial update")
-            epd.displayPartBaseImage(epd.getbuffer(image))
             epd.init(epd.PART_UPDATE)
+            epd.displayPartBaseImage(epd.getbuffer(image))
         n += 1
-        time.sleep(30)
+        time.sleep(10)
 
 except IOError as e:
     logging.info(e)

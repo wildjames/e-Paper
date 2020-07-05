@@ -172,6 +172,7 @@ try:
         epd.display(epd.getbuffer(image))
         time.sleep(30)
     else:
+        print("Trying a partial update")
         epd.displayPartBaseImage(epd.getbuffer(image))
         epd.init(epd.PART_UPDATE)
 

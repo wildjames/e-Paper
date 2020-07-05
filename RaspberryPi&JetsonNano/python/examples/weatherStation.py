@@ -176,7 +176,7 @@ try:
             print("Trying a partial update")
             epd.displayPartBaseImage(epd.getbuffer(image))
             epd.init(epd.PART_UPDATE)
-
+        n += 1
 
 except IOError as e:
     logging.info(e)

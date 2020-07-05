@@ -149,7 +149,7 @@ try:
 
         # Sunrise and sunset times. Start with the icons
         draw.text((10, 100), "A", font=fontweather, fill=0)
-        draw.text((160, 100), "J", font=fontweather, fill=0)
+        draw.text((150, 100), "J", font=fontweather, fill=0)
         # Draw the actual times
         draw.text(
             (45, 100), 
@@ -157,7 +157,7 @@ try:
             font=font20, fill=0
         )
         draw.text(
-            (200, 100), 
+            (190, 100), 
             time.strftime("%H:%M", time.localtime(sunset)),
             font=font20, fill=0
         )

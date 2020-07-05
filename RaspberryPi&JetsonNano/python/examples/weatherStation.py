@@ -31,6 +31,7 @@ if sys.version_info[0] < 3:
 
 print("Got all imports!! yaaay")
 
+full_refresh_every = 5 # draw cycles
 refresh_delay = 30 * 60 # seconds
 owm = pyowm.OWM('76f362fd439dd059a4baa1ae2722375c')
 
@@ -163,7 +164,7 @@ try:
         )
 
         # Push to the screen
-        if n%10 == 0:
+        if n%full_refresh_every == 0:
             logging.info("init and Clear")
             epd.init(epd.FULL_UPDATE)
             epd.Clear(0xFF)

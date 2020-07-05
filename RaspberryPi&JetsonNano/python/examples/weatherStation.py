@@ -130,6 +130,7 @@ try:
     # Draw the weather icon
     print("Placing the weather icon at x location {}".format(epd.width-w3))
     print("epd width: {}".format(epd.width))
+    print("epd height: {}".format(epd.height))
     print("w3: {}".format(w3))
     draw.text((epd.width-w3, 5), weather_icon_dict[weather.get_weather_code()], font=fontweatherbig, fill=0)
     # When was the weather we're displaying updated?

@@ -82,126 +82,102 @@ epd_width = 122
 
 n = 0
 try:
-    print("Starting...")
-    logging.info("epd2in13_V2 WeatherStation")
+    while True:
+        print("Starting...")
+        logging.info("epd2in13_V2 WeatherStation")
 
-    print("Fetching weather...")
-    # Get Weather data from OWM
-    obs = owm.weather_at_id(city_id)
-    location = obs.get_location().get_name()
-    weather = obs.get_weather()
-    reftime = weather.get_reference_time()
-    description = weather.get_detailed_status()
-    temperature = weather.get_temperature(unit='celsius')
-    humidity = weather.get_humidity()
-    pressure = weather.get_pressure()
-    clouds = weather.get_clouds()
-    wind = weather.get_wind()
-    rain = weather.get_rain()
-    sunrise = weather.get_sunrise_time()
-    sunset = weather.get_sunset_time()
-    print("Got weather from OWM!\n")
-    
-    # Set up our font objects. These will be used to draw text to the screen
-    font16 = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), 16)
-    font20 = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), 20)
-    font24 = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), 24)
+        print("Fetching weather...")
+        # Get Weather data from OWM
+        obs = owm.weather_at_id(city_id)
+        location = obs.get_location().get_name()
+        weather = obs.get_weather()
+        reftime = weather.get_reference_time()
+        description = weather.get_detailed_status()
+        temperature = weather.get_temperature(unit='celsius')
+        humidity = weather.get_humidity()
+        pressure = weather.get_pressure()
+        clouds = weather.get_clouds()
+        wind = weather.get_wind()
+        rain = weather.get_rain()
+        sunrise = weather.get_sunrise_time()
+        sunset = weather.get_sunset_time()
+        print("Got weather from OWM!\n")
+        
+        # Set up our font objects. These will be used to draw text to the screen
+        font16 = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), 16)
+        font20 = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), 20)
+        font24 = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), 24)
 
-    # These "fonts" are actually the weather icons
-    fontweather = ImageFont.truetype(os.path.join(picdir, 'meteocons-webfont.ttf'), 30)
-    fontweatherbig = ImageFont.truetype(os.path.join(picdir, 'meteocons-webfont.ttf'), 40)
+        # These "fonts" are actually the weather icons
+        fontweather = ImageFont.truetype(os.path.join(picdir, 'meteocons-webfont.ttf'), 30)
+        fontweatherbig = ImageFont.truetype(os.path.join(picdir, 'meteocons-webfont.ttf'), 40)
 
-    # I want to know how big my main texts are, so lets retieve that
-    w1, h1 = font24.getsize(location)
-    w2, h2 = font20.getsize(description) 
-    w3, h3 = fontweatherbig.getsize(weather_icon_dict[weather.get_weather_code()])
+        # I want to know how big my main texts are, so lets retieve that
+        w1, h1 = font24.getsize(location)
+        w2, h2 = font20.getsize(description) 
+        w3, h3 = fontweatherbig.getsize(weather_icon_dict[weather.get_weather_code()])
 
-    image = Image.new('1', (epd_height, epd_width), 255) # 255 means all white
-    # This is our drawing driver object.
-    draw = ImageDraw.Draw(image) 
+        image = Image.new('1', (epd_height, epd_width), 255) # 255 means all white
+        # This is our drawing driver object.
+        draw = ImageDraw.Draw(image) 
 
-    ### Construct the weather page ###
-    # Show the current location and weather at the top
-    draw.text((10, 0), description, font=font24, fill=0)
-    draw.text((10, 30), location, font=font20, fill=0)
-    # Draw the weather icon
-    print("Placing the weather icon at x location {}".format(epd_width-w3))
-    print("epd width: {}".format(epd_width))
-    print("epd height: {}".format(epd_height))
-    print("w3: {}".format(w3))
-    draw.text((epd_height-5-w3, 5), weather_icon_dict[weather.get_weather_code()], font=fontweatherbig, fill=0)
-    # When was the weather we're displaying updated?
-    draw.text((10, 55), "Observed at: {}".format(time.strftime("%I:%M %p", time.localtime(reftime)), font=font16, fill=0))
+        ### Construct the weather page ###
+        # Show the current location and weather at the top
+        draw.text((10, 0), description, font=font24, fill=0)
+        draw.text((10, 30), location, font=font20, fill=0)
+        # Draw the weather icon
+        print("Placing the weather icon at x location {}".format(epd_width-w3))
+        print("epd width: {}".format(epd_width))
+        print("epd height: {}".format(epd_height))
+        print("w3: {}".format(w3))
+        draw.text((epd_height-5-w3, 5), weather_icon_dict[weather.get_weather_code()], font=fontweatherbig, fill=0)
+        # When was the weather we're displaying updated?
+        draw.text((10, 55), "Observed at: {}".format(time.strftime("%I:%M %p", time.localtime(reftime)), font=font16, fill=0))
 
-    # Lets draw the temperature on the display now.
-    tempstring = "{:.0f}{}C".format(temperature['temp'], u'\u00b0')
-    print("Temperature: {}".format(tempstring))
-    w4, h4 = font24.getsize(tempstring)
-    draw.text((10, 70), tempstring, font=font24, fill=0)
-    # And the min/max temperatures. 
-    # Thermometer picture
-    draw.text((10+w4, 70), "'", font=fontweather, fill=0)
-    draw.text(
-        (150, 70), 
-        "{:.0f}{} | {:.0f}{}".format(temperature['temp_min'], u'\u00b0', temperature['temp_max'], u'\u00b0'),
-        font=font24,
-        fill=0
-    )
+        # Lets draw the temperature on the display now.
+        tempstring = "{:.0f}{}C".format(temperature['temp'], u'\u00b0')
+        print("Temperature: {}".format(tempstring))
+        w4, h4 = font24.getsize(tempstring)
+        draw.text((10, 70), tempstring, font=font24, fill=0)
+        # And the min/max temperatures. 
+        # Thermometer picture
+        draw.text((10+w4, 70), "'", font=fontweather, fill=0)
+        draw.text(
+            (150, 70), 
+            "{:.0f}{} | {:.0f}{}".format(temperature['temp_min'], u'\u00b0', temperature['temp_max'], u'\u00b0'),
+            font=font24,
+            fill=0
+        )
 
-    # Sunrise and sunset times. Start with the icons
-    draw.text((10, 100), "A", font=fontweather, fill=0)
-    draw.text((130, 100), "J", font=fontweather, fill=0)
-    # Draw the actual times
-    draw.text(
-        (45, 100), 
-        time.strftime("%H:%M", time.localtime(sunrise)), 
-        font=font20, fill=0
-    )
-    draw.text(
-        (160, 100), 
-        time.strftime("%H:%M", time.localtime(sunset)),
-        font=font20, fill=0
-    )
+        # Sunrise and sunset times. Start with the icons
+        draw.text((10, 100), "A", font=fontweather, fill=0)
+        draw.text((130, 100), "J", font=fontweather, fill=0)
+        # Draw the actual times
+        draw.text(
+            (45, 100), 
+            time.strftime("%H:%M", time.localtime(sunrise)), 
+            font=font20, fill=0
+        )
+        draw.text(
+            (160, 100), 
+            time.strftime("%H:%M", time.localtime(sunset)),
+            font=font20, fill=0
+        )
 
-    # Push to the screen
-    if n%10 == 0:
-        epd = epd2in13_V2.EPD()
-        logging.info("init and Clear")
-        epd.init(epd.FULL_UPDATE)
-        epd.Clear(0xFF)
-        epd.display(epd.getbuffer(image))
-        time.sleep(30)
-    else:
-        print("Trying a partial update")
-        epd.displayPartBaseImage(epd.getbuffer(image))
-        epd.init(epd.PART_UPDATE)
+        # Push to the screen
+        if n%10 == 0:
+            epd = epd2in13_V2.EPD()
+            logging.info("init and Clear")
+            epd.init(epd.FULL_UPDATE)
+            epd.Clear(0xFF)
+            epd.display(epd.getbuffer(image))
+            time.sleep(30)
+        else:
+            print("Trying a partial update")
+            epd.displayPartBaseImage(epd.getbuffer(image))
+            epd.init(epd.PART_UPDATE)
 
 
-    # # partial update
-    logging.info("4.show time...")
-    time_image = Image.new('1', (epd_height, epd_width), 255)
-    time_draw = ImageDraw.Draw(time_image)
-    
-    epd.init(epd.FULL_UPDATE)
-    epd.displayPartBaseImage(epd.getbuffer(time_image))
-    
-    epd.init(epd.PART_UPDATE)
-    num = 0
-    while (True):
-        time_draw.rectangle((120, 80, 220, 105), fill = 255)
-        time_draw.text((120, 80), time.strftime('%H:%M:%S'), font = font24, fill = 0)
-        epd.displayPartial(epd.getbuffer(time_image))
-        num = num + 1
-        if(num == 10):
-            break
-    
-    logging.info("Clear...")
-    epd.init(epd.FULL_UPDATE)
-    epd.Clear(0xFF)
-    
-    logging.info("Goto Sleep...")
-    epd.sleep()
-    
 except IOError as e:
     logging.info(e)
     

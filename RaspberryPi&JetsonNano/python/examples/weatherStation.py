@@ -126,12 +126,14 @@ try:
     ### Construct the weather page ###
     # Show the current location and weather at the top
     draw.text((10, 0), description, font=font24, fill=0)
-    draw.text((10, 25), location, font=font20, fill=0)
+    draw.text((10, 30), location, font=font20, fill=0)
     # Draw the weather icon
     print("Placing the weather icon at x location {}".format(epd.width-w3))
+    print("epd width: {}".format(epd.width))
+    print("w3: {}".format(w3))
     draw.text((epd.width-w3, 5), weather_icon_dict[weather.get_weather_code()], font=fontweatherbig, fill=0)
     # When was the weather we're displaying updated?
-    draw.text((10, 45), "Observed at: {}".format(time.strftime("%I:%M %p", time.localtime(reftime)), font=font16, fill=0))
+    draw.text((10, 55), "Observed at: {}".format(time.strftime("%I:%M %p", time.localtime(reftime)), font=font16, fill=0))
 
     # Lets draw the temperature on the display now.
     tempstring = "{:.0f}{}C".format(temperature['temp'], u'\u00b0')

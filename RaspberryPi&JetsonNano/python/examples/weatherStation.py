@@ -131,7 +131,7 @@ try:
     print("w3: {}".format(w3))
     draw.text((epd_height-5-w3, 5), weather_icon_dict[weather.get_weather_code()], font=fontweatherbig, fill=0)
     # When was the weather we're displaying updated?
-    draw.text((10, 55), "Observed at: {}".format(time.strftime("%I:%M %p", time.localtime(time.utcnow)), font=font16, fill=0))
+    draw.text((10, 55), "Observed at: {}".format(time.strftime("%I:%M %p", time.localtime(time.time.utcnow)), font=font16, fill=0))
 
     # Lets draw the temperature on the display now.
     tempstring = "{:.0f}{}C".format(temperature['temp'], u'\u00b0')

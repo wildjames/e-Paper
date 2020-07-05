@@ -107,8 +107,8 @@ try:
         font24 = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), 24)
 
         # These "fonts" are actually the weather icons
-        fontweather = ImageFont.truetype(os.path.join(picdir, 'meteocons-webfont.ttf'), 35)
-        fontweatherbig = ImageFont.truetype(os.path.join(picdir, 'meteocons-webfont.ttf'), 40)
+        fontweather = ImageFont.truetype(os.path.join(picdir, 'meteocons-webfont.ttf'), 25)
+        fontweatherbig = ImageFont.truetype(os.path.join(picdir, 'meteocons-webfont.ttf'), 45)
 
         # I want to know how big my main texts are, so lets retieve that
         w1, h1 = font24.getsize(location)

@@ -132,7 +132,7 @@ try:
     print("epd width: {}".format(epd.width))
     print("epd height: {}".format(epd.height))
     print("w3: {}".format(w3))
-    draw.text((epd.width-w3, 5), weather_icon_dict[weather.get_weather_code()], font=fontweatherbig, fill=0)
+    draw.text((epd.height-5-w3, 5), weather_icon_dict[weather.get_weather_code()], font=fontweatherbig, fill=0)
     # When was the weather we're displaying updated?
     draw.text((10, 55), "Observed at: {}".format(time.strftime("%I:%M %p", time.localtime(reftime)), font=font16, fill=0))
 

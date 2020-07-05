@@ -157,7 +157,7 @@ try:
             font=font20, fill=0
         )
         draw.text(
-            (180, 100), 
+            (190, 100), 
             time.strftime("%H:%M", time.localtime(sunset)),
             font=font20, fill=0
         )

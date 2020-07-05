@@ -142,7 +142,7 @@ try:
     draw.text((10+w4, 70), "'", font=fontweather, fill=0)
     draw.text(
         (150, 70), 
-        "{}{} | {}{}".format(temperature['temp_min'], u'\u00b0', temperature['temp_max'], u'\u00b0'),
+        "{:.0f}{} | {:.0f}{}".format(temperature['temp_min'], u'\u00b0', temperature['temp_max'], u'\u00b0'),
         font=font24,
         fill=0
     )

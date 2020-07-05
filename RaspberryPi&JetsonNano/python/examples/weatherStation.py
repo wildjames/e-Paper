@@ -144,7 +144,7 @@ try:
         draw.text((10+w4, 70), "'", font=fontweather, fill=0)
         draw.text(
             (150, 70), 
-            "{:.0f}{} | {:.0f}{}".format(temperature['temp_min'], u'\u00b0', temperature['temp_max'], u'\u00b0'),
+            "{:.0f}{} | {:.0f}{}".format(temperature['temp_min'], u'\u00b0', n),# temperature['temp_max'], u'\u00b0'),
             font=font24,
             fill=0
         )
@@ -171,12 +171,12 @@ try:
             epd.init(epd.FULL_UPDATE)
             epd.Clear(0xFF)
             epd.display(epd.getbuffer(image))
-            time.sleep(30)
         else:
             print("Trying a partial update")
             epd.displayPartBaseImage(epd.getbuffer(image))
             epd.init(epd.PART_UPDATE)
         n += 1
+        time.sleep(30)
 
 except IOError as e:
     logging.info(e)

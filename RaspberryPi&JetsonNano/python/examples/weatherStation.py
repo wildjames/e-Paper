@@ -1,21 +1,35 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
+print("Doing imports...")
 import sys
 import os
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
+print("Got the following important directories:")
+print("{}\n{}\n\n".format(picdir, libdir))
 if os.path.exists(libdir):
+    print("The libdir exists, adding it to the path!")
     sys.path.append(libdir)
+else:
+    print("Couldn't find the libdir!\n{}\n\nExiting...".format(libdir))
 
+print("Tricky imports...")
 import logging
+print("Got logging")
 from waveshare_epd import epd2in13_V2
+print("Got the waveshare lib...")
 import time
+print("Got time")
 from PIL import Image,ImageDraw,ImageFont
+print("Got PIL...")
 import traceback
+print("Got traceback...")
 
 import pyowm
 if sys.version_info[0] < 3:
     raise Exception("Must be using Python 3")
+
+print("Got all imports!! yaaay")
 
 refresh_delay = 30 * 60 # seconds
 owm = pyowm.OWM('76f362fd439dd059a4baa1ae2722375c')
@@ -65,6 +79,7 @@ weather_icon_dict = {200 : "6", 201 : "6", 202 : "6", 210 : "6", 211 : "6", 212 
 logging.basicConfig(level=logging.DEBUG)
 
 try:
+    print("Starting...")
     logging.info("epd2in13_V2 WeatherStation")
     
     epd = epd2in13_V2.EPD()
